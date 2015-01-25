@@ -11,8 +11,14 @@ import android.widget.Button;
 import com.google.android.gms.plus.Plus;
 import com.google.android.gms.common.api.GoogleApiClient;
 
+import com.google.android.gms.plus.*;
+
 
 public class MainActivity2 extends ActionBarActivity {
+
+    /* Client used to interact with Google APIs. */
+    private GoogleApiClient mGoogleApiClient;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,7 +26,7 @@ public class MainActivity2 extends ActionBarActivity {
         setContentView(R.layout.activity_main_activity2);
 
 
-        Button logOutBtn = (Button) findViewById(R.id.btnNextScreen);
+        Button logOutBtn = (Button) findViewById(R.id.logOutBtn);
 
         //Listening to button event
 
@@ -35,6 +41,7 @@ public class MainActivity2 extends ActionBarActivity {
                     }
                 }
             }
+        });
     }
 
 
