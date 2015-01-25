@@ -17,16 +17,21 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
         Button btnSwitch = (Button) findViewById(R.id.btnSwitch);
 
-        //Listening to button event
+       /* //Listening to button event
         btnSwitch.setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0) {
                 //Starting a new Intent
                 Intent nextScreen = new Intent(getApplicationContext(), MainActivity3.class);
                 startActivity(nextScreen);
             }
-        });
+        }); */
     }
+    public void signInButton(View view) {
+        // Do something in response to button click
+        Intent nextScreen = new Intent(getApplicationContext(), MainActivity3.class);
+        startActivity(nextScreen);
 
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

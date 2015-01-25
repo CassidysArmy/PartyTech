@@ -18,6 +18,8 @@ import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.plus.*;
 
+//TODO after screen 3 go to screen 2
+//TODO fix "Log in with Google" button (make it actually appear)
 
 public class MainActivity3 extends ActionBarActivity
         implements GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks {
@@ -52,7 +54,8 @@ public class MainActivity3 extends ActionBarActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Create a GoogleApiClient instance
+        mSignInClicked = true;
+        //Create a Google API Client
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addApi(Plus.API)
                 .addScope(Plus.SCOPE_PLUS_LOGIN)
@@ -60,23 +63,30 @@ public class MainActivity3 extends ActionBarActivity
                 .addOnConnectionFailedListener(this)
                 .build();
 
-    }
 
+
+
+    }
+/*
     public void signInButton(View view) {
         // Do something in response to button click
 
         if (view.getId() == R.id.sign_in_button
-                && !mGoogleApiClient.isConnecting()) {
+                && !mGoogleApiClient.isConnecting() ) {
             mSignInClicked = true;
             resolveSignInError();
         }
     }
+    */
 
     @Override
     public void onConnected(Bundle connectionHint) {
         //Connected to Google Play services!
         mSignInClicked = false;
         Toast.makeText(this, "User is connected!", Toast.LENGTH_LONG).show();
+        Intent nextScreen = new Intent(getApplicationContext(), MainActivity2.class);
+        startActivity(nextScreen);
+
     }
 
     public void onDisconnected() {
