@@ -17,6 +17,16 @@ import com.google.android.gms.common.GooglePlayServicesClient.OnConnectionFailed
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.plus.*;
+import com.google.android.gms.plus.model.people.Person;
+import com.couchbase.lite.*;
+import com.couchbase.lite.android.AndroidContext;
+import com.couchbase.lite.util.Log;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.Map;
 
 //TODO after screen 3 go to screen 2
 //TODO fix "Log in with Google" button (make it actually appear)
@@ -48,12 +58,12 @@ public class MainActivity3 extends ActionBarActivity
     private ConnectionResult mConnectionResult;
 
 
-
+    final String TAG = "GoogleProcesses";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        Log.d(TAG, "Client Initiated");
         //Create a Google API Client
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addApi(Plus.API)
@@ -61,9 +71,91 @@ public class MainActivity3 extends ActionBarActivity
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .build();
+        Log.d(TAG, "Client Built");
 
 
 
+        // create a manager
+        Manager manager;
+        try {
+            manager = new Manager(new AndroidContext(this), Manager.DEFAULT_OPTIONS);
+            Log.d (TAG, "Manager created");
+        } catch (IOException e) {
+            Log.e(TAG, "Cannot create manager object");
+            return;
+        }
+
+        // create a name for the database and make sure the name is legal
+        String dbname = "users";
+        if (!Manager.isValidDatabaseName(dbname)) {
+            Log.e(TAG, "Bad database name");
+            return;
+        }
+        // create a new database
+        Database database;
+        try {
+            database = manager.getDatabase(dbname);
+            Log.d (TAG, "Database created");
+        } catch (CouchbaseLiteException e) {
+            Log.e(TAG, "Cannot get database");
+            return;
+        }
+
+        // get the current date and time
+        SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        Calendar calendar = GregorianCalendar.getInstance();
+        String currentTimeString = dateFormatter.format(calendar.getTime());
+
+        // create an object that contains data for a document
+        Map<String, Object> docContent = new HashMap<String, Object>();
+        docContent.put("message", "TetherDex Users");
+        docContent.put("creationDate", currentTimeString);
+        // display the data for the new document
+        Log.d(TAG, "docContent=" + String.valueOf(docContent));
+        // create an empty document
+        Document document = database.createDocument();
+        // add content to document and write the document to the database
+        try {
+            document.putProperties(docContent);
+            Log.d (TAG, "Document written to database named " + dbname + " with ID = " + document.getId());
+        } catch (CouchbaseLiteException e) {
+            Log.e(TAG, "Cannot write document to database", e);
+        }
+        // save the ID of the new document
+        String docID = document.getId();
+
+        // retrieve the document from the database
+        Document retrievedDocument = database.getDocument(docID);
+        // display the retrieved document
+        Log.d(TAG, "retrievedDocument=" + String.valueOf(retrievedDocument.getProperties()));
+
+
+
+
+        try {
+            retrievedDocument.putProperties(updatedProperties); //TODO fix and figure out
+            Log.d(TAG, "updated retrievedDocument=" + String.valueOf(retrievedDocument.getProperties()));
+        } catch (CouchbaseLiteException e) {
+            Log.e (TAG, "Cannot update document", e);
+        }
+
+
+    }
+
+    @Override
+    public void onConnected(Bundle connectionHint) {
+        //Connected to Google Play services!
+        mSignInClicked = false;
+        Toast.makeText(this, "User is connected!", Toast.LENGTH_LONG).show();
+
+
+        if (Plus.PeopleApi.getCurrentPerson(mGoogleApiClient) != null) {
+            Person currentPerson = Plus.PeopleApi.getCurrentPerson(mGoogleApiClient);
+            String personName = currentPerson.getDisplayName();
+            Person.Image personPhoto = currentPerson.getImage();
+            String personGooglePlusProfile = currentPerson.getUrl();
+            Person.AgeRange personAgeRange = currentPerson.getAgeRange();
+        }
 
     }
 
@@ -78,14 +170,7 @@ public class MainActivity3 extends ActionBarActivity
     }
 
 
-    @Override
-    public void onConnected(Bundle connectionHint) {
-        //Connected to Google Play services!
-        mSignInClicked = false;
-        Toast.makeText(this, "User is connected!", Toast.LENGTH_LONG).show();
 
-
-    }
 
     public void onDisconnected() {
         Toast.makeText(this, "Goodbye", Toast.LENGTH_LONG).show();
@@ -154,6 +239,9 @@ public class MainActivity3 extends ActionBarActivity
         }
     }
 
+
+
+
     /*-====================NON GOOGLE=============================*/
 
     @Override
@@ -177,6 +265,7 @@ public class MainActivity3 extends ActionBarActivity
 
         return super.onOptionsItemSelected(item);
     }
+
 
 
 
