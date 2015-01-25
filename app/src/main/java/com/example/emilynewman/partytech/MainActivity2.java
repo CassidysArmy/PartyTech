@@ -17,7 +17,7 @@ import com.google.android.gms.plus.*;
 public class MainActivity2 extends ActionBarActivity {
 
     /* Client used to interact with Google APIs. */
-    private GoogleApiClient mGoogleApiClient;
+    private GoogleApiClient mGoogleApiClient; //TODO connect with bottom one
 
 
     @Override
@@ -34,7 +34,7 @@ public class MainActivity2 extends ActionBarActivity {
 
             public void onClick(View view) {
                 if (view.getId() == R.id.logOutBtn) {
-                    if (mGoogleApiClient.isConnected()) {
+                   if (mGoogleApiClient.isConnected()) { //TODO fix logout button - pass API from previous activity?
                         Plus.AccountApi.clearDefaultAccount(mGoogleApiClient);
                         mGoogleApiClient.disconnect();
                         mGoogleApiClient.connect();
