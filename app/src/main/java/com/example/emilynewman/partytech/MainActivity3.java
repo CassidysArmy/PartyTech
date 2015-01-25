@@ -119,7 +119,7 @@ public class MainActivity3 extends ActionBarActivity
 
         // create an object that contains data for a document
         Map<String, Object> docContent = new HashMap<String, Object>();
-        docContent.put("message", "TetherDex Users");
+        docContent.put("message", "GoogleUsers");
         docContent.put("creationDate", currentTimeString);
         // display the data for the new document
         Log.d(TAG, "docContent=" + String.valueOf(docContent));
