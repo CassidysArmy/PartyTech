@@ -1,9 +1,15 @@
 package com.example.emilynewman.partytech;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+
+import com.google.android.gms.plus.Plus;
+import com.google.android.gms.common.api.GoogleApiClient;
 
 
 public class MainActivity2 extends ActionBarActivity {
@@ -12,6 +18,23 @@ public class MainActivity2 extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_activity2);
+
+
+        Button logOutBtn = (Button) findViewById(R.id.btnNextScreen);
+
+        //Listening to button event
+
+        logOutBtn.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View view) {
+                if (view.getId() == R.id.logOutBtn) {
+                    if (mGoogleApiClient.isConnected()) {
+                        Plus.AccountApi.clearDefaultAccount(mGoogleApiClient);
+                        mGoogleApiClient.disconnect();
+                        mGoogleApiClient.connect();
+                    }
+                }
+            }
     }
 
 

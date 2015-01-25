@@ -83,8 +83,7 @@ public class MainActivity3 extends ActionBarActivity
         //Connected to Google Play services!
         mSignInClicked = false;
         Toast.makeText(this, "User is connected!", Toast.LENGTH_LONG).show();
-        Intent nextScreen = new Intent(getApplicationContext(), MainActivity2.class);
-        startActivity(nextScreen);
+
 
     }
 
@@ -134,6 +133,8 @@ public class MainActivity3 extends ActionBarActivity
             if (!mGoogleApiClient.isConnecting()) {
                 mGoogleApiClient.connect();
             }
+            Intent nextScreen = new Intent(getApplicationContext(), MainActivity2.class);
+            startActivity(nextScreen);
         }
     }
 
