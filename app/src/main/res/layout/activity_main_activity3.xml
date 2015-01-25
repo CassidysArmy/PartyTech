@@ -13,8 +13,8 @@
     <com.google.android.gms.common.SignInButton
         android:id="@+id/sign_in_button"
         android:layout_width="wrap_content"
-<<<<<<< HEAD
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:onClick="signInButton"/>
 
     <ImageButton
         android:layout_width="wrap_content"
@@ -25,7 +25,5 @@
         android:src="@drawable/common_signin_btn_text_normal_light"
         android:minHeight="80dp"
         android:minWidth="150dp" />
-=======
         android:layout_height="wrap_content"/>
->>>>>>> f4a10a80d2855a37b59aa7bff00bf82b42fa4360
 </RelativeLayout>
