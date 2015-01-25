@@ -4,6 +4,9 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
+import android.view.View;
+import android.content.Intent;
 
 //test
 public class MainActivity extends ActionBarActivity {
@@ -12,6 +15,16 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Button btnSwitch = (Button) findViewById(R.id.btnSwitch);
+
+        //Listening to button event
+        btnSwitch.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View arg0) {
+                //Starting a new Intent
+                Intent nextScreen = new Intent(getApplicationContext(), MainActivity2.class);
+                startActivity(nextScreen);
+            }
+        });
     }
 
 
@@ -36,4 +49,5 @@ public class MainActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
 }
