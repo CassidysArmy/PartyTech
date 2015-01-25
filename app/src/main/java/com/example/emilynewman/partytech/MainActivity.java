@@ -21,7 +21,7 @@ public class MainActivity extends ActionBarActivity {
         btnSwitch.setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0) {
                 //Starting a new Intent
-                Intent nextScreen = new Intent(getApplicationContext(), MainActivity2.class);
+                Intent nextScreen = new Intent(getApplicationContext(), MainActivity3.class);
                 startActivity(nextScreen);
             }
         });
