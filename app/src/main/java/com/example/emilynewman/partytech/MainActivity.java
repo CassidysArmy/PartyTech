@@ -15,7 +15,7 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Button btnSwitch = (Button) findViewById(R.id.btnSwitch);
+
 
        /* //Listening to button event
         btnSwitch.setOnClickListener(new View.OnClickListener() {
@@ -25,6 +25,16 @@ public class MainActivity extends ActionBarActivity {
                 startActivity(nextScreen);
             }
         }); */
+
+
+        Button sign_in_button = (Button) findViewById(R.id.sign_in_button);
+        sign_in_button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View arg0) {
+                //Starting a new Intent
+                Intent nextScreen = new Intent(getApplicationContext(), MainActivity3.class);
+                startActivity(nextScreen);
+            }
+        });
     }
     public void signInButton(View view) {
         // Do something in response to button click
