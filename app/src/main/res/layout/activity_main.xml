@@ -23,9 +23,9 @@
         android:id="@+id/textView"
         android:elegantTextHeight="true"
         android:textSize="55dp"
-        android:layout_above="@+id/textView"
-        android:layout_centerHorizontal="true"
         android:textStyle="bold"
-        android:textColor="#ffecfff4" />
+        android:textColor="#ffecfff4"
+        android:layout_above="@+id/btnSwitch"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>
