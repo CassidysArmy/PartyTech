@@ -58,6 +58,18 @@ public class MainActivity3 extends ActionBarActivity
     private ConnectionResult mConnectionResult;
 
 
+    //Couchbase
+    private Database database;
+    private String docID;
+
+    //User info
+    private Person currentPerson;
+    private String personName;
+    private Person.Image personPhoto;
+    private String personGooglePlusProfile;
+    private Person.AgeRange personAgeRange;
+
+
     final String TAG = "GoogleProcesses";
 
     @Override
@@ -92,7 +104,6 @@ public class MainActivity3 extends ActionBarActivity
             return;
         }
         // create a new database
-        Database database;
         try {
             database = manager.getDatabase(dbname);
             Log.d (TAG, "Database created");
@@ -123,23 +134,7 @@ public class MainActivity3 extends ActionBarActivity
         }
         // save the ID of the new document
         String docID = document.getId();
-
-        // retrieve the document from the database
-        Document retrievedDocument = database.getDocument(docID);
-        // display the retrieved document
-        Log.d(TAG, "retrievedDocument=" + String.valueOf(retrievedDocument.getProperties()));
-
-
-
-
-        try {
-            retrievedDocument.putProperties(updatedProperties); //TODO fix and figure out
-            Log.d(TAG, "updated retrievedDocument=" + String.valueOf(retrievedDocument.getProperties()));
-        } catch (CouchbaseLiteException e) {
-            Log.e (TAG, "Cannot update document", e);
-        }
-
-
+        Log.d(TAG, "Document saved");
     }
 
     @Override
@@ -150,11 +145,31 @@ public class MainActivity3 extends ActionBarActivity
 
 
         if (Plus.PeopleApi.getCurrentPerson(mGoogleApiClient) != null) {
-            Person currentPerson = Plus.PeopleApi.getCurrentPerson(mGoogleApiClient);
-            String personName = currentPerson.getDisplayName();
-            Person.Image personPhoto = currentPerson.getImage();
-            String personGooglePlusProfile = currentPerson.getUrl();
-            Person.AgeRange personAgeRange = currentPerson.getAgeRange();
+            currentPerson = Plus.PeopleApi.getCurrentPerson(mGoogleApiClient);
+            personName = currentPerson.getDisplayName();
+            personPhoto = currentPerson.getImage();
+            personGooglePlusProfile = currentPerson.getUrl();
+            personAgeRange = currentPerson.getAgeRange();
+        }
+
+        // retrieve the document from the database
+        Document retrievedDocument = database.getDocument(docID);
+        // display the retrieved document
+        Log.d(TAG, "retrievedDocument=" + String.valueOf(retrievedDocument.getProperties()));
+
+        // update the document
+        Map<String, Object> updatedProperties = new HashMap<String, Object>();
+        updatedProperties.putAll(retrievedDocument.getProperties());
+        updatedProperties.put("currentUser", currentPerson);
+        updatedProperties.put ("userName", personName);
+        updatedProperties.put ("userPhoto", personPhoto);
+        updatedProperties.put ("userGPP", personGooglePlusProfile);
+        updatedProperties.put ("userAgeRange", personAgeRange);
+        try {
+            retrievedDocument.putProperties(updatedProperties);
+            Log.d(TAG, "updated retrievedDocument=" + String.valueOf(retrievedDocument.getProperties()));
+        } catch (CouchbaseLiteException e) {
+            Log.e (TAG, "Cannot update document", e);
         }
 
     }
