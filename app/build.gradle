@@ -1,9 +1,16 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        config {
+            keyAlias 'androiddebugkey'
+            keyPassword 'androidn00b'
+            storeFile file('/Users/ilonabodnar/.android/debug.keystore')
+            storePassword 'androidn00b'
+        }
+    }
     compileSdkVersion 21
     buildToolsVersion "21.1.2"
-
     defaultConfig {
         applicationId "com.example.emilynewman.partytech"
         minSdkVersion 16
@@ -22,4 +29,5 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:21.0.3'
+    compile 'com.google.android.gms:play-services:4.1.32'
 }
