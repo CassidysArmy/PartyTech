@@ -54,7 +54,6 @@ public class MainActivity3 extends ActionBarActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mSignInClicked = true;
         //Create a Google API Client
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addApi(Plus.API)
@@ -67,7 +66,7 @@ public class MainActivity3 extends ActionBarActivity
 
 
     }
-/*
+
     public void signInButton(View view) {
         // Do something in response to button click
 
@@ -77,7 +76,7 @@ public class MainActivity3 extends ActionBarActivity
             resolveSignInError();
         }
     }
-    */
+
 
     @Override
     public void onConnected(Bundle connectionHint) {

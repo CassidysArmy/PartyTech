@@ -8,6 +8,8 @@ import android.widget.Button;
 import android.view.View;
 import android.content.Intent;
 
+import com.google.android.gms.common.SignInButton;
+
 //test
 public class MainActivity extends ActionBarActivity {
 
@@ -27,7 +29,7 @@ public class MainActivity extends ActionBarActivity {
         }); */
 
 
-        Button sign_in_button = (Button) findViewById(R.id.sign_in_button);
+        SignInButton sign_in_button = (SignInButton) findViewById(R.id.sign_in_button);
         sign_in_button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View arg0) {
                 //Starting a new Intent

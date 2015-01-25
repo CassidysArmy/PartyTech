@@ -10,16 +10,22 @@
 
 
 
-
+    <com.google.android.gms.common.SignInButton
+        android:id="@+id/sign_in_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="signInButton"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"/>
 
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/imageButton"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
         android:src="@drawable/common_signin_btn_text_normal_light"
         android:minHeight="80dp"
-        android:minWidth="150dp" />
+        android:minWidth="150dp"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
         android:layout_height="wrap_content"/>
 </RelativeLayout>
